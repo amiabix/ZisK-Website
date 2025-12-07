@@ -1,56 +1,12 @@
-# Welcome to your Lovable project
+# ZisK Website
 
-## Project info
+Official website for ZisK - The Proof Infrastructure for Modern Compute.
 
-**URL**: https://lovable.dev/projects/7fa9cfac-4f2f-4c50-93aa-ff4b6f63422e
+## About
 
-## How can I edit this code?
+ZisK is an innovative and high-performance zkVM (Zero-Knowledge Virtual Machine) that enables trustless, verifiable computation, allowing developers to generate and verify proofs for arbitrary program execution efficiently.
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/7fa9cfac-4f2f-4c50-93aa-ff4b6f63422e) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
+## Technologies
 
 This project is built with:
 
@@ -60,14 +16,49 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+## Getting Started
 
-Simply open [Lovable](https://lovable.dev/projects/7fa9cfac-4f2f-4c50-93aa-ff4b6f63422e) and click on Share -> Publish.
+### Prerequisites
 
-## Can I connect a custom domain to my Lovable project?
+- Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-Yes, you can!
+### Installation
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```sh
+# Step 1: Clone the repository
+git clone https://github.com/amiabix/ZisK-Website.git
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+# Step 2: Navigate to the project directory
+cd ZisK-Website
+
+# Step 3: Install the necessary dependencies
+npm install
+
+# Step 4: Start the development server
+npm run dev
+```
+
+The development server will start on `http://localhost:8080`
+
+## Project Structure
+
+- `src/components/` - React components for the website
+- `src/pages/` - Page components
+- `public/` - Static assets including logos
+- `src/index.css` - Global styles and animations
+
+## Links
+
+- **GitHub**: https://github.com/0xPolygonHermez/zisk
+- **Documentation**: https://ziskdocs.vercel.app/getting-started/installation
+- **Twitter/X**: https://x.com/ziskvm
+- **Discord**: https://discord.gg/bh2b7JurXH
+
+## License
+
+All crates in this monorepo are licensed under one of the following options:
+
+- The Apache License, Version 2.0
+- The MIT License
+
+You may choose either license at your discretion.
