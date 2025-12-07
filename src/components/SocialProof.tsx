@@ -64,19 +64,19 @@ export const SocialProof = () => {
       {/* Subtle animated background glow */}
       <div className="social-proof-glow-bg"></div>
       
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
-        <div className="flex items-center gap-8 flex-wrap">
-          <div className="flex-shrink-0 text-base lg:text-lg font-mono font-bold text-muted-foreground uppercase tracking-wider whitespace-nowrap social-proof-label">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 lg:gap-8">
+          <div className="flex-shrink-0 text-sm sm:text-base lg:text-lg font-mono font-bold text-muted-foreground uppercase tracking-wider social-proof-label">
             Trusted by:
           </div>
-          <div className="flex-1 flex items-center gap-12 flex-wrap">
+          <div className="flex-1 flex flex-wrap items-center gap-4 sm:gap-6 lg:gap-12">
             {partners.map((partner, index) => (
               <a
                 key={`${partner.name}-${index}`}
                 href={partner.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-proof-partner text-base lg:text-lg font-display font-bold text-muted-foreground transition-smooth flex-shrink-0 relative"
+                className="social-proof-partner text-sm sm:text-base lg:text-lg font-display font-bold text-muted-foreground transition-smooth flex-shrink-0 relative"
                 style={{ animationDelay: `${index * 0.08}s` }}
               >
                 <span className="social-proof-partner-text">{partner.name}</span>

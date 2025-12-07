@@ -3,8 +3,8 @@ import { Github, Twitter, MessageCircle } from "lucide-react";
 export const Footer = () => {
   return (
     <footer className="border-t border-border bg-background">
-      <div className="container mx-auto px-6 lg:px-12 py-12">
-        <div className="grid md:grid-cols-4 gap-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-8 sm:py-10 lg:py-12">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 lg:gap-12">
           <div className="space-y-4">
             <a href="/" className="transition-smooth hover:opacity-80 inline-block">
               <img 

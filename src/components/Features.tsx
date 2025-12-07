@@ -41,7 +41,7 @@ const features = [
 
 export const Features = () => {
   return (
-    <section className="pt-2 lg:pt-4 pb-20 lg:pb-32 relative overflow-hidden group">
+    <section className="pt-2 lg:pt-4 pb-12 sm:pb-16 lg:pb-20 xl:pb-32 relative overflow-hidden group">
       {/* Animated background box effect - bottom left */}
       <div className="absolute inset-0 animated-card-background features-background z-0">
         <div className="animated-card-shine" />
@@ -57,31 +57,31 @@ export const Features = () => {
         <div className="animated-card-line line-2" />
         <div className="animated-card-line line-3" />
       </div>
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="relative">
             {/* Top line - extends 20% on each side, pushed up 33px, thicker */}
-            <div className="absolute bg-border" style={{ 
+            <div className="hidden md:block absolute bg-border" style={{ 
               top: '-33px',
               left: 'calc(-20% - 0.5rem)', 
               right: 'calc(-20% - 0.5rem)',
               height: '2px'
             }} />
             
-            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-12 lg:gap-16 pt-4">
-              {/* Left side - Heading */}
-              <div className="flex-shrink-0 lg:w-1/2">
-                <div className="inline-block px-3 py-1 border border-border rounded text-xs font-mono text-muted-foreground mb-4">
+            <div className="space-y-8 sm:space-y-10 lg:space-y-12 pt-4">
+              {/* Heading */}
+              <div className="w-full lg:w-[60%]">
+                <div className="inline-block px-3 py-1 border border-border rounded text-xs font-mono text-muted-foreground mb-3 sm:mb-4">
                   For Whom
                 </div>
-                <h2 className="text-5xl lg:text-7xl font-display font-semibold tracking-tight leading-[1.1] text-left">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-display font-semibold tracking-tight leading-[1.1] text-left">
                   Built for <span style={{ color: '#0ABF83' }}>Developers</span>, Designed for <span style={{ color: '#0ABF83' }}>Infrastructure</span>, Run at <span style={{ color: '#0ABF83' }}>Scale</span>
                 </h2>
               </div>
               
-              {/* Right side - Features Grid */}
-              <div className="flex-1 lg:w-1/2 flex justify-start">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch text-left">
+              {/* Features Grid */}
+              <div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 items-stretch text-left w-full">
             {features.map((feature, index) => (
               <div key={feature.title} className="relative">
                 {index > 0 && index % 3 === 0 && (
@@ -97,11 +97,11 @@ export const Features = () => {
                     <div className="text-xs font-mono text-muted-foreground mb-2">
                       {feature.category}
                     </div>
-                    <h3 className="text-2xl lg:text-3xl font-display font-semibold mb-4 relative z-[3] mt-4" style={{ color: '#E7E7E3' }}>
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-display font-semibold mb-3 sm:mb-4 relative z-[3] mt-2 sm:mt-4" style={{ color: '#E7E7E3' }}>
                       {feature.title}
                     </h3>
                     <div className="bottom">
-                      <p className="text-lg leading-relaxed" style={{ color: '#E7E7E3' }}>
+                      <p className="text-base sm:text-lg leading-relaxed" style={{ color: '#E7E7E3' }}>
                         {(() => {
                           const desc = feature.description;
                           // Highlight keywords for each feature

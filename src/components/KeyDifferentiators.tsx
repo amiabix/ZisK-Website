@@ -25,12 +25,12 @@ const KeyDiffCard = ({ item, index }: { item: typeof differentiators[0], index: 
         <div className="hidden md:block absolute top-0 bottom-0 w-px bg-[#E7E7E3]" style={{ left: '-2rem' }}></div>
       )}
       <div className="luminous-card animate-fade-in group relative">
-        <div className="content relative z-10 p-6 lg:p-8">
-          <h3 className="text-3xl lg:text-4xl font-display font-semibold mb-6 relative z-[3]" style={{ color: '#E7E7E3', WebkitTextStroke: '0.5px rgba(45, 46, 61, 0.3)' }}>
+        <div className="content relative z-10 p-4 sm:p-6 lg:p-8">
+          <h3 className="text-2xl sm:text-3xl lg:text-4xl font-display font-semibold mb-4 sm:mb-6 relative z-[3]" style={{ color: '#E7E7E3', WebkitTextStroke: '0.5px rgba(45, 46, 61, 0.3)' }}>
             {item.title}
           </h3>
           <div className="bottom">
-            <p className="text-lg leading-relaxed" style={{ color: '#E7E7E3' }}>
+            <p className="text-base sm:text-lg leading-relaxed" style={{ color: '#E7E7E3' }}>
               {(() => {
                 const desc = item.description;
                 // Highlight key terms for each card
@@ -71,7 +71,7 @@ const KeyDiffCard = ({ item, index }: { item: typeof differentiators[0], index: 
 
 export const KeyDifferentiators = () => {
   return (
-    <section className="pt-2 lg:pt-4 pb-20 lg:pb-32 key-diff-section-bg relative overflow-hidden group">
+    <section className="pt-2 lg:pt-4 pb-12 sm:pb-16 lg:pb-20 xl:pb-32 key-diff-section-bg relative overflow-hidden group">
       {/* Animated background box effect - top right */}
       <div className="absolute inset-0 animated-card-background key-diff-section-background z-0">
         <div className="animated-card-shine" />
@@ -102,11 +102,11 @@ export const KeyDifferentiators = () => {
         <div className="animated-card-line line-2" />
         <div className="animated-card-line line-3" />
       </div>
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
-        <div className="max-w-6xl mx-auto space-y-12">
-          <div className="space-y-4 text-left relative">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+        <div className="max-w-6xl mx-auto space-y-8 sm:space-y-10 lg:space-y-12">
+          <div className="space-y-3 sm:space-y-4 text-left relative">
             {/* Top line - extends 20% on each side, pushed up 33px, thicker */}
-            <div className="absolute bg-border" style={{ 
+            <div className="hidden md:block absolute bg-border" style={{ 
               top: '-33px',
               left: 'calc(-20% - 0.5rem)', 
               right: 'calc(-20% - 0.5rem)',
@@ -117,13 +117,13 @@ export const KeyDifferentiators = () => {
             <div className="inline-block px-3 py-1 border border-border rounded text-xs font-mono text-muted-foreground">
               Key Differentiators
             </div>
-            <h2 className="text-3xl lg:text-4xl font-display font-semibold tracking-tight" style={{ WebkitTextStroke: '0.5px rgba(45, 46, 61, 0.3)' }}>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-semibold tracking-tight" style={{ WebkitTextStroke: '0.5px rgba(45, 46, 61, 0.3)' }}>
               How <span className="text-[#0ABF83]">ZisK</span> Delivers
             </h2>
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 lg:gap-24 items-stretch pt-16 lg:pt-24">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12 lg:gap-16 xl:gap-24 items-stretch pt-8 sm:pt-12 lg:pt-16 xl:pt-24">
             {differentiators.map((item, index) => (
               <KeyDiffCard 
                 key={item.title} 
