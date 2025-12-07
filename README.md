@@ -1,6 +1,6 @@
 # ZisK Website
 
-Wesite draft for ZisK - The Proof Infrastructure for Modern Compute.
+Website draft for ZisK - The Proof Infrastructure for Modern Compute.
 
 ## About
 
