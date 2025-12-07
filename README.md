@@ -1,6 +1,6 @@
 # ZisK Website
 
-Official website for ZisK - The Proof Infrastructure for Modern Compute.
+Wesite draft for ZisK - The Proof Infrastructure for Modern Compute.
 
 ## About
 
