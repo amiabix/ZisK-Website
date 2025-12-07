@@ -1,0 +1,3058 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* ZisK Brand: Ultra-minimal, technical dark theme */
+    --background: 0 0% 5%;
+    --foreground: 0 0% 95%;
+
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 95%;
+
+    /* ZisK Primary Green: #007755 (dark) and #00ff7c (bright) */
+    --primary: 158 100% 23%;
+    --primary-foreground: 0 0% 95%;
+    --primary-bright: 150 100% 50%;
+
+    /* Subtle grey surfaces */
+    --secondary: 240 3% 12%;
+    --secondary-foreground: 0 0% 85%;
+
+    --muted: 240 2% 15%;
+    --muted-foreground: 0 0% 60%;
+
+    /* Yellow accent: #f4ff00 */
+    --accent: 62 100% 50%;
+    --accent-foreground: 0 0% 5%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    /* Thin borders, minimal contrast */
+    --border: 240 2% 18%;
+    --input: 240 2% 18%;
+    --ring: 158 100% 50%;
+
+    /* Sharp, minimal radius */
+    --radius: 0.125rem;
+
+    /* Transition timing */
+    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Shadows (very subtle) */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-feature-settings: 'ss01', 'ss02', 'cv01', 'cv02';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  code, pre, .mono {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-feature-settings: 'zero', 'ss01';
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-base);
+  }
+}
+
+@layer components {
+  /* Animated Card Styles */
+  .animated-card {
+    position: relative;
+    cursor: pointer;
+    transition: box-shadow 0.25s;
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+
+  .animated-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.015);
+  }
+
+  .animated-card-icon {
+    position: relative;
+    z-index: 2;
+    display: table;
+    padding: 8px;
+  }
+
+  .animated-card-icon::after {
+    content: '';
+    position: absolute;
+    inset: 4.5px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(2px);
+    transition: background-color 0.25s, border-color 0.25s;
+  }
+
+  .animated-card-shine {
+    border-radius: 0.75rem;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .animated-card-shine::before {
+    content: '';
+    width: 150%;
+    padding-bottom: 150%;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    bottom: 55%;
+    filter: blur(35px);
+    opacity: 0.1;
+    transform: translateX(-50%);
+    background-image: conic-gradient(
+      from 205deg at 50% 50%,
+      rgba(16, 185, 129, 0) 0deg,
+      #10B981 25deg,
+      rgba(52, 211, 153, 0.18) 295deg,
+      rgba(16, 185, 129, 0) 360deg
+    );
+  }
+
+  .animated-card-background {
+    border-radius: 0.75rem;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    -webkit-mask-image: radial-gradient(circle at 60% 5%, black 0%, black 15%, transparent 60%);
+    mask-image: radial-gradient(circle at 60% 5%, black 0%, black 15%, transparent 60%);
+  }
+
+  .animated-card-tiles {
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  /* Hero background - starts hidden, shows on hover */
+  .hero-background .hero-tiles {
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .hero-background .animated-card-tile {
+    opacity: 0;
+  }
+
+  .hero-background .animated-card-line {
+    opacity: 0;
+  }
+
+  .hero-background .animated-card-shine {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .hero-background .animated-card-shine::before {
+    left: 50%;
+    top: 55%;
+    bottom: auto;
+    opacity: 0.1;
+  }
+
+  /* Show on hover */
+  .group:hover .hero-background .hero-tiles {
+    opacity: 0.6;
+    transition-delay: 0.25s;
+  }
+
+  .group:hover .hero-background .animated-card-shine {
+    opacity: 1;
+    transition-duration: 0.5s;
+    transition-delay: 0s;
+  }
+
+  .group:hover .hero-background .animated-card-tile {
+    animation-name: tile;
+  }
+
+  /* WhatIsZisk-specific: top-right positioning */
+  .what-is-zisk-background {
+    -webkit-mask-image: radial-gradient(circle at 60% 5%, black 0%, black 20%, transparent 70%);
+    mask-image: radial-gradient(circle at 60% 5%, black 0%, black 20%, transparent 70%);
+  }
+
+  .what-is-zisk-background .animated-card-shine {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .what-is-zisk-background .animated-card-shine::before {
+    left: 50%;
+    top: 5%;
+    bottom: auto;
+    opacity: 0.1;
+  }
+
+  .what-is-zisk-background .what-is-zisk-tiles {
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .what-is-zisk-background .animated-card-tile.tile-1 {
+    top: 0;
+    bottom: auto;
+    right: 0;
+    left: auto;
+    height: 10%;
+    width: 10%;
+  }
+
+  .what-is-zisk-background .animated-card-tile.tile-2 {
+    top: 0;
+    bottom: auto;
+    right: 10%;
+    left: auto;
+    height: 10%;
+    width: 10%;
+  }
+
+  .what-is-zisk-background .animated-card-tile.tile-3 {
+    top: 0;
+    bottom: auto;
+    right: 20%;
+    left: auto;
+    height: 10%;
+    width: 10%;
+  }
+
+  .what-is-zisk-background .animated-card-tile.tile-4 {
+    top: 0;
+    bottom: auto;
+    right: 30%;
+    left: auto;
+    height: 10%;
+    width: 10%;
+  }
+
+  .what-is-zisk-background .animated-card-tile.tile-5 {
+    top: 10%;
+    bottom: auto;
+    right: 0;
+    left: auto;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .what-is-zisk-background .animated-card-tile.tile-6 {
+    top: 10%;
+    bottom: auto;
+    right: 22.5%;
+    left: auto;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .what-is-zisk-background .animated-card-tile.tile-7 {
+    top: 10%;
+    bottom: auto;
+    right: 45%;
+    left: auto;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .what-is-zisk-background .animated-card-tile.tile-8 {
+    top: 10%;
+    bottom: auto;
+    right: 67.5%;
+    left: auto;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .what-is-zisk-background .animated-card-tile.tile-9 {
+    top: 32.5%;
+    bottom: auto;
+    right: 45%;
+    left: auto;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .what-is-zisk-background .animated-card-tile.tile-10 {
+    top: 32.5%;
+    bottom: auto;
+    right: 67.5%;
+    left: auto;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .what-is-zisk-background .animated-card-line.line-1::before {
+    top: 10%;
+    bottom: auto;
+  }
+
+  .what-is-zisk-background .animated-card-line.line-2::before {
+    top: 32.5%;
+    bottom: auto;
+  }
+
+  .what-is-zisk-background .animated-card-line.line-3::before {
+    top: 45%;
+    bottom: auto;
+  }
+
+  .what-is-zisk-background .animated-card-line.line-1::after {
+    right: 22.5%;
+    left: auto;
+  }
+
+  .what-is-zisk-background .animated-card-line.line-2::after {
+    right: 45%;
+    left: auto;
+  }
+
+  .what-is-zisk-background .animated-card-line.line-3::after {
+    right: 67.5%;
+    left: auto;
+  }
+
+  .group:hover .what-is-zisk-background .what-is-zisk-tiles {
+    opacity: 0.6;
+    transition-delay: 0.25s;
+  }
+
+  .group:hover .what-is-zisk-background .animated-card-shine {
+    opacity: 1;
+    transition-duration: 0.5s;
+    transition-delay: 0s;
+  }
+
+  .group:hover .what-is-zisk-background .animated-card-tile {
+    animation-name: tile;
+  }
+
+  .group:hover .what-is-zisk-background .animated-card-line {
+    opacity: 0.2;
+    transition-duration: 0.15s;
+  }
+
+  .group:hover .what-is-zisk-background .animated-card-line::before {
+    transform: scaleX(1);
+  }
+
+  .group:hover .what-is-zisk-background .animated-card-line::after {
+    transform: scaleY(1);
+  }
+
+  .group:hover .what-is-zisk-background .animated-card-line.line-1::before,
+  .group:hover .what-is-zisk-background .animated-card-line.line-1::after {
+    transition-delay: 0s;
+  }
+
+  .group:hover .what-is-zisk-background .animated-card-line.line-2::before,
+  .group:hover .what-is-zisk-background .animated-card-line.line-2::after {
+    transition-delay: 0.15s;
+  }
+
+  .group:hover .what-is-zisk-background .animated-card-line.line-3::before,
+  .group:hover .what-is-zisk-background .animated-card-line.line-3::after {
+    transition-delay: 0.3s;
+  }
+
+  /* KeyDifferentiators - adjust box dimensions to fit longer text content */
+  .key-diff-background .animated-card-tile.tile-1,
+  .key-diff-background .animated-card-tile.tile-2,
+  .key-diff-background .animated-card-tile.tile-3,
+  .key-diff-background .animated-card-tile.tile-4,
+  .key-diff-background .animated-card-tile.tile-5,
+  .key-diff-background .animated-card-tile.tile-6,
+  .key-diff-background .animated-card-tile.tile-7,
+  .key-diff-background .animated-card-tile.tile-8,
+  .key-diff-background .animated-card-tile.tile-9,
+  .key-diff-background .animated-card-tile.tile-10 {
+    height: 15% !important;
+    width: 15% !important;
+  }
+
+  /* SocialProof overrides - use 2x bigger boxes (45% × 45%) */
+  .social-proof-background .animated-card-tile.tile-1 {
+    height: 45% !important;
+    width: 45% !important;
+    top: 0 !important;
+    right: 0 !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
+  .social-proof-background .animated-card-tile.tile-2 {
+    height: 45% !important;
+    width: 45% !important;
+    top: 0 !important;
+    right: 45% !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
+  .social-proof-background .animated-card-tile.tile-3 {
+    height: 45% !important;
+    width: 45% !important;
+    top: 0 !important;
+    right: 90% !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
+  .social-proof-background .animated-card-tile.tile-4 {
+    height: 45% !important;
+    width: 45% !important;
+    top: 45% !important;
+    right: 0 !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
+  .social-proof-background .animated-card-tile.tile-5 {
+    height: 45% !important;
+    width: 45% !important;
+    top: 45% !important;
+    right: 45% !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
+  .social-proof-background .animated-card-tile.tile-6 {
+    height: 45% !important;
+    width: 45% !important;
+    top: 45% !important;
+    right: 90% !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
+  .social-proof-background .animated-card-tile.tile-7 {
+    height: 45% !important;
+    width: 45% !important;
+    top: 90% !important;
+    right: 0 !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
+  .social-proof-background .animated-card-tile.tile-8 {
+    height: 45% !important;
+    width: 45% !important;
+    top: 90% !important;
+    right: 45% !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
+  .social-proof-background .animated-card-tile.tile-9 {
+    height: 45% !important;
+    width: 45% !important;
+    top: 90% !important;
+    right: 90% !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
+  .social-proof-background .animated-card-tile.tile-10 {
+    height: 45% !important;
+    width: 45% !important;
+    top: 135% !important;
+    right: 45% !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
+  
+  /* Adjust line positions to match the new tile layout */
+  .social-proof-background .animated-card-line.line-1::before {
+    top: 45% !important;
+  }
+  .social-proof-background .animated-card-line.line-2::before {
+    top: 90% !important;
+  }
+  .social-proof-background .animated-card-line.line-3::before {
+    top: 135% !important;
+  }
+  .social-proof-background .animated-card-line.line-1::after {
+    right: 45% !important;
+    left: auto !important;
+  }
+  .social-proof-background .animated-card-line.line-2::after {
+    right: 90% !important;
+    left: auto !important;
+  }
+  .social-proof-background .animated-card-line.line-3::after {
+    right: 135% !important;
+    left: auto !important;
+  }
+
+  .group:hover .hero-background .animated-card-line {
+    opacity: 0.2;
+    transition-duration: 0.15s;
+  }
+
+  .group:hover .hero-background .animated-card-line::before {
+    transform: scaleX(1);
+  }
+
+  .group:hover .hero-background .animated-card-line::after {
+    transform: scaleY(1);
+  }
+
+  .group:hover .hero-background .animated-card-line.line-1::before,
+  .group:hover .hero-background .animated-card-line.line-1::after {
+    transition-delay: 0s;
+  }
+
+  .group:hover .hero-background .animated-card-line.line-2::before,
+  .group:hover .hero-background .animated-card-line.line-2::after {
+    transition-delay: 0.15s;
+  }
+
+  .group:hover .hero-background .animated-card-line.line-3::before,
+  .group:hover .hero-background .animated-card-line.line-3::after {
+    transition-delay: 0.3s;
+  }
+
+  /* Hero-specific: bottom-right positioning */
+  .hero-background {
+    -webkit-mask-image: radial-gradient(circle at 60% 95%, black 0%, black 20%, transparent 70%);
+    mask-image: radial-gradient(circle at 60% 95%, black 0%, black 20%, transparent 70%);
+  }
+
+  .hero-background .animated-card-shine {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .hero-background .animated-card-tile.tile-1 {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    height: 10%;
+    width: 10%;
+  }
+
+  .hero-background .animated-card-tile.tile-2 {
+    top: auto;
+    bottom: 0;
+    left: 10%;
+    height: 10%;
+    width: 10%;
+  }
+
+  .hero-background .animated-card-tile.tile-3 {
+    top: auto;
+    bottom: 0;
+    left: 20%;
+    height: 10%;
+    width: 10%;
+  }
+
+  .hero-background .animated-card-tile.tile-4 {
+    top: auto;
+    bottom: 0;
+    left: 30%;
+    height: 10%;
+    width: 10%;
+  }
+
+  .hero-background .animated-card-tile.tile-5 {
+    top: auto;
+    bottom: 10%;
+    left: 0;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .hero-background .animated-card-tile.tile-6 {
+    top: auto;
+    bottom: 10%;
+    left: 22.5%;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .hero-background .animated-card-tile.tile-7 {
+    top: auto;
+    bottom: 10%;
+    left: 45%;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .hero-background .animated-card-tile.tile-8 {
+    top: auto;
+    bottom: 10%;
+    left: 67.5%;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .hero-background .animated-card-tile.tile-9 {
+    top: auto;
+    bottom: 32.5%;
+    left: 45%;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .hero-background .animated-card-tile.tile-10 {
+    top: auto;
+    bottom: 32.5%;
+    left: 67.5%;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .hero-background .animated-card-line.line-1::before {
+    top: auto;
+    bottom: 10%;
+  }
+
+  .hero-background .animated-card-line.line-2::before {
+    top: auto;
+    bottom: 32.5%;
+  }
+
+  .hero-background .animated-card-line.line-3::before {
+    top: auto;
+    bottom: 45%;
+  }
+
+  .hero-background .animated-card-line.line-1::after {
+    left: 22.5%;
+  }
+
+  .hero-background .animated-card-line.line-2::after {
+    left: 45%;
+  }
+
+  .hero-background .animated-card-line.line-3::after {
+    left: 67.5%;
+  }
+
+  .animated-card-tile {
+    position: absolute;
+    background-color: rgba(0, 255, 124, 0.12);
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    opacity: 0;
+  }
+
+  .animated-card-tile.tile-4,
+  .animated-card-tile.tile-6,
+  .animated-card-tile.tile-10 {
+    animation-delay: -2s;
+  }
+
+  .animated-card-tile.tile-3,
+  .animated-card-tile.tile-5,
+  .animated-card-tile.tile-8 {
+    animation-delay: -4s;
+  }
+
+  .animated-card-tile.tile-2,
+  .animated-card-tile.tile-9 {
+    animation-delay: -6s;
+  }
+
+  .animated-card-tile.tile-1 {
+    top: 0;
+    left: 0;
+    height: 10%;
+    width: 22.5%;
+  }
+
+  .animated-card-tile.tile-2 {
+    top: 0;
+    left: 22.5%;
+    height: 10%;
+    width: 27.5%;
+  }
+
+  .animated-card-tile.tile-3 {
+    top: 0;
+    left: 50%;
+    height: 10%;
+    width: 27.5%;
+  }
+
+  .animated-card-tile.tile-4 {
+    top: 0;
+    left: 77.5%;
+    height: 10%;
+    width: 22.5%;
+  }
+
+  .animated-card-tile.tile-5 {
+    top: 10%;
+    left: 0;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .animated-card-tile.tile-6 {
+    top: 10%;
+    left: 22.5%;
+    height: 22.5%;
+    width: 27.5%;
+  }
+
+  .animated-card-tile.tile-7 {
+    top: 10%;
+    left: 50%;
+    height: 22.5%;
+    width: 27.5%;
+  }
+
+  .animated-card-tile.tile-8 {
+    top: 10%;
+    left: 77.5%;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  .animated-card-tile.tile-9 {
+    top: 32.5%;
+    left: 50%;
+    height: 22.5%;
+    width: 27.5%;
+  }
+
+  .animated-card-tile.tile-10 {
+    top: 32.5%;
+    left: 77.5%;
+    height: 22.5%;
+    width: 22.5%;
+  }
+
+  @keyframes tile {
+    0%, 12.5%, 100% {
+      opacity: 1;
+    }
+    25%, 82.5% {
+      opacity: 0;
+    }
+  }
+
+  .animated-card-line {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+
+  .animated-card-line::before,
+  .animated-card-line::after {
+    content: '';
+    position: absolute;
+    background-color: hsl(240, 2%, 18%);
+    transition: transform 0.35s;
+  }
+
+  .animated-card-line::before {
+    left: 0;
+    right: 0;
+    height: 1px;
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+  }
+
+  .animated-card-line::after {
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    transform-origin: 50% 0;
+    transform: scaleY(0);
+  }
+
+  .animated-card-line.line-1::before {
+    top: 10%;
+  }
+
+  .animated-card-line.line-1::after {
+    left: 22.5%;
+  }
+
+  .animated-card-line.line-1::before,
+  .animated-card-line.line-1::after {
+    transition-delay: 0.3s;
+  }
+
+  .animated-card-line.line-2::before {
+    top: 32.5%;
+  }
+
+  .animated-card-line.line-2::after {
+    left: 50%;
+  }
+
+  .animated-card-line.line-2::before,
+  .animated-card-line.line-2::after {
+    transition-delay: 0.15s;
+  }
+
+  .animated-card-line.line-3::before {
+    top: 55%;
+  }
+
+  .animated-card-line.line-3::after {
+    right: 22.5%;
+  }
+
+  .animated-card:hover {
+    box-shadow: 
+      0px 3px 6px rgba(0, 0, 0, 0.04),
+      0px 8px 15px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.2);
+  }
+
+  .animated-card:hover .animated-card-icon::after {
+    background-color: rgba(0, 255, 124, 0.1);
+    border-color: rgba(0, 255, 124, 0.2);
+  }
+
+  .animated-card:hover .animated-card-icon svg {
+    color: hsl(150, 100%, 50%);
+  }
+
+  .animated-card:hover .animated-card-shine {
+    opacity: 1;
+    transition-duration: 0.5s;
+    transition-delay: 0s;
+  }
+
+  .animated-card:hover .animated-card-tiles {
+    opacity: 1;
+    transition-delay: 0.25s;
+  }
+
+  .animated-card:hover .animated-card-tile {
+    animation-name: tile;
+  }
+
+  .animated-card:hover .animated-card-line {
+    opacity: 1;
+    transition-duration: 0.15s;
+  }
+
+  .animated-card:hover .animated-card-line::before {
+    transform: scaleX(1);
+  }
+
+  .animated-card:hover .animated-card-line::after {
+    transform: scaleY(1);
+  }
+
+  .animated-card:hover .animated-card-line.line-1::before,
+  .animated-card:hover .animated-card-line.line-1::after {
+    transition-delay: 0s;
+  }
+
+  .animated-card:hover .animated-card-line.line-2::before,
+  .animated-card:hover .animated-card-line.line-2::after {
+    transition-delay: 0.15s;
+  }
+
+  .animated-card:hover .animated-card-line.line-3::before,
+  .animated-card:hover .animated-card-line.line-3::after {
+    transition-delay: 0.3s;
+  }
+}
+
+/* Luminous Card Styles */
+.luminous-card {
+  position: relative;
+  background: transparent;
+  width: 100%;
+  min-height: 20rem;
+  height: 100%;
+  color: #fff;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  overflow: hidden;
+}
+
+/* Show underline on highlighted terms when card is hovered */
+.luminous-card:hover .highlighted-term {
+  text-decoration: underline;
+  text-decoration-color: #0ABF83;
+}
+
+/* Social Proof - Elegant Trust Animation */
+.social-proof-section {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Subtle pulsing background glow */
+.social-proof-glow-bg {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  max-width: 800px;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    #007755 20%, 
+    #0ABF83 50%, 
+    #007755 80%, 
+    transparent 100%
+  );
+  opacity: 0.3;
+  animation: social-proof-pulse 3s ease-in-out infinite;
+  filter: blur(1px);
+}
+
+@keyframes social-proof-pulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: translateX(-50%) scaleX(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateX(-50%) scaleX(1.1);
+  }
+}
+
+/* Label animation - slide up (only when visible) */
+.social-proof-label {
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.social-proof-visible .social-proof-label {
+  animation: social-proof-slide-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes social-proof-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Partner link styling - slide up with stagger (only when visible) */
+.social-proof-partner {
+  position: relative;
+  padding: 0.5rem 0;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.social-proof-visible .social-proof-partner {
+  animation: social-proof-slide-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.social-proof-partner-text {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.social-proof-partner-underline {
+  position: absolute;
+  bottom: 0.25rem;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #007755, #0ABF83);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px rgba(10, 191, 131, 0.4);
+}
+
+/* Hover effects */
+.social-proof-partner:hover .social-proof-partner-text {
+  color: #0ABF83;
+  text-shadow: 0 0 12px rgba(10, 191, 131, 0.3);
+  transform: translateY(-1px);
+}
+
+.social-proof-partner:hover .social-proof-partner-underline {
+  width: 100%;
+  box-shadow: 0 0 12px rgba(10, 191, 131, 0.6);
+}
+
+/* Gentle glow on hover */
+.social-proof-partner:hover::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(10, 191, 131, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: social-proof-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes social-proof-glow-pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* KeyDifferentiators card animation - refined version */
+.key-diff-background {
+  -webkit-mask-image: radial-gradient(circle at 60% 5%, black 0%, black 20%, transparent 70%);
+  mask-image: radial-gradient(circle at 60% 5%, black 0%, black 20%, transparent 70%);
+}
+
+/* Card 1: Top right only */
+.key-diff-card-1 {
+  -webkit-mask-image: radial-gradient(circle at 60% 5%, black 0%, black 20%, transparent 70%);
+  mask-image: radial-gradient(circle at 60% 5%, black 0%, black 20%, transparent 70%);
+}
+
+/* Card 2: Top left AND top right (both) */
+.key-diff-card-2 {
+  -webkit-mask-image: radial-gradient(circle at 40% 5%, black 0%, black 20%, transparent 60%), radial-gradient(circle at 60% 5%, black 0%, black 20%, transparent 60%);
+  mask-image: radial-gradient(circle at 40% 5%, black 0%, black 20%, transparent 60%), radial-gradient(circle at 60% 5%, black 0%, black 20%, transparent 60%);
+}
+
+/* Card 3: Top left only */
+.key-diff-card-3 {
+  -webkit-mask-image: radial-gradient(circle at 40% 5%, black 0%, black 20%, transparent 70%);
+  mask-image: radial-gradient(circle at 40% 5%, black 0%, black 20%, transparent 70%);
+}
+
+.key-diff-background .key-diff-tiles,
+.key-diff-card-1 .key-diff-tiles,
+.key-diff-card-2 .key-diff-tiles,
+.key-diff-card-3 .key-diff-tiles {
+  opacity: 0.08;
+  transition: opacity 0.3s;
+}
+
+.key-diff-background .animated-card-tile,
+.key-diff-card-1 .animated-card-tile,
+.key-diff-card-2 .animated-card-tile,
+.key-diff-card-3 .animated-card-tile {
+  opacity: 0.08;
+  transition: opacity 0.2s;
+}
+
+.key-diff-background .animated-card-line,
+.key-diff-card-1 .animated-card-line,
+.key-diff-card-2 .animated-card-line,
+.key-diff-card-3 .animated-card-line {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.key-diff-background .animated-card-shine,
+.key-diff-card-1 .animated-card-shine,
+.key-diff-card-2 .animated-card-shine,
+.key-diff-card-3 .animated-card-shine {
+  position: absolute;
+  top: 5%;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  opacity: 0.08;
+  transition: opacity 0.4s;
+  filter: blur(25px);
+}
+
+.key-diff-background .animated-card-shine::before,
+.key-diff-card-1 .animated-card-shine::before {
+  content: '';
+  position: absolute;
+  top: 5%;
+  right: 0;
+  left: auto;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(0, 255, 124, 0.4) 0%, rgba(0, 255, 124, 0.2) 30%, transparent 70%);
+  filter: blur(35px);
+}
+
+.key-diff-card-2 .animated-card-shine::before {
+  content: '';
+  position: absolute;
+  top: 5%;
+  right: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(0, 255, 124, 0.4) 0%, rgba(0, 255, 124, 0.2) 30%, transparent 70%);
+  filter: blur(35px);
+}
+
+.key-diff-card-3 .animated-card-shine {
+  right: auto;
+  left: 0;
+}
+
+.key-diff-card-3 .animated-card-shine::before {
+  content: '';
+  position: absolute;
+  top: 5%;
+  right: auto;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(0, 255, 124, 0.4) 0%, rgba(0, 255, 124, 0.2) 30%, transparent 70%);
+  filter: blur(35px);
+}
+
+/* Show on card hover - apply to all card variants */
+.luminous-card:hover .key-diff-background .key-diff-tiles,
+.luminous-card:hover .key-diff-card-1 .key-diff-tiles,
+.luminous-card:hover .key-diff-card-2 .key-diff-tiles,
+.luminous-card:hover .key-diff-card-3 .key-diff-tiles {
+  opacity: 0.5;
+  transition-delay: 0.2s;
+}
+
+.luminous-card:hover .key-diff-background .animated-card-shine,
+.luminous-card:hover .key-diff-card-1 .animated-card-shine,
+.luminous-card:hover .key-diff-card-2 .animated-card-shine,
+.luminous-card:hover .key-diff-card-3 .animated-card-shine {
+  opacity: 1;
+  transition-duration: 0.5s;
+  transition-delay: 0s;
+}
+
+.luminous-card:hover .key-diff-background .animated-card-tile,
+.luminous-card:hover .key-diff-card-1 .animated-card-tile,
+.luminous-card:hover .key-diff-card-2 .animated-card-tile,
+.luminous-card:hover .key-diff-card-3 .animated-card-tile {
+  animation-name: tile;
+}
+
+.luminous-card:hover .key-diff-background .animated-card-line,
+.luminous-card:hover .key-diff-card-1 .animated-card-line,
+.luminous-card:hover .key-diff-card-2 .animated-card-line,
+.luminous-card:hover .key-diff-card-3 .animated-card-line {
+  opacity: 1;
+}
+
+.luminous-card:hover .key-diff-background .animated-card-line::before,
+.luminous-card:hover .key-diff-background .animated-card-line::after,
+.luminous-card:hover .key-diff-card-1 .animated-card-line::before,
+.luminous-card:hover .key-diff-card-1 .animated-card-line::after,
+.luminous-card:hover .key-diff-card-2 .animated-card-line::before,
+.luminous-card:hover .key-diff-card-2 .animated-card-line::after,
+.luminous-card:hover .key-diff-card-3 .animated-card-line::before,
+.luminous-card:hover .key-diff-card-3 .animated-card-line::after {
+  opacity: 1;
+}
+
+/* Position tiles for key-diff cards - only large boxes */
+.key-diff-background .animated-card-tile.tile-1,
+.key-diff-background .animated-card-tile.tile-2,
+.key-diff-background .animated-card-tile.tile-3,
+.key-diff-background .animated-card-tile.tile-4 {
+  display: none;
+}
+
+.key-diff-background .animated-card-tile.tile-5 {
+  top: 0;
+  bottom: auto;
+  right: 0;
+  left: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-background .animated-card-tile.tile-6 {
+  top: 0;
+  bottom: auto;
+  right: 28%;
+  left: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-background .animated-card-tile.tile-7 {
+  top: 0;
+  bottom: auto;
+  right: 56%;
+  left: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-background .animated-card-tile.tile-8 {
+  top: 0;
+  bottom: auto;
+  right: 84%;
+  left: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-background .animated-card-tile.tile-9 {
+  top: 28%;
+  bottom: auto;
+  right: 56%;
+  left: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-background .animated-card-tile.tile-10 {
+  top: 28%;
+  bottom: auto;
+  right: 84%;
+  left: auto;
+  height: 28%;
+  width: 28%;
+}
+
+/* Card 1: Top right boxes (already defined above via .key-diff-background) */
+
+/* Card 2: Top left AND top right boxes */
+.key-diff-card-2 .animated-card-tile.tile-5 {
+  top: 0;
+  bottom: auto;
+  right: 0;
+  left: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-card-2 .animated-card-tile.tile-6 {
+  top: 0;
+  bottom: auto;
+  right: 28%;
+  left: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-card-2 .animated-card-tile.tile-7 {
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-card-2 .animated-card-tile.tile-8 {
+  top: 0;
+  bottom: auto;
+  left: 28%;
+  right: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-card-2 .animated-card-tile.tile-9 {
+  top: 28%;
+  bottom: auto;
+  right: 28%;
+  left: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-card-2 .animated-card-tile.tile-10 {
+  top: 28%;
+  bottom: auto;
+  left: 28%;
+  right: auto;
+  height: 28%;
+  width: 28%;
+}
+
+/* Card 3: Top left boxes */
+.key-diff-card-3 .animated-card-tile.tile-5 {
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-card-3 .animated-card-tile.tile-6 {
+  top: 0;
+  bottom: auto;
+  left: 28%;
+  right: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-card-3 .animated-card-tile.tile-7 {
+  top: 0;
+  bottom: auto;
+  left: 56%;
+  right: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-card-3 .animated-card-tile.tile-8 {
+  top: 0;
+  bottom: auto;
+  left: 84%;
+  right: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-card-3 .animated-card-tile.tile-9 {
+  top: 28%;
+  bottom: auto;
+  left: 56%;
+  right: auto;
+  height: 28%;
+  width: 28%;
+}
+
+.key-diff-card-3 .animated-card-tile.tile-10 {
+  top: 28%;
+  bottom: auto;
+  left: 84%;
+  right: auto;
+  height: 28%;
+  width: 28%;
+}
+
+/* Base line styles for all key-diff cards */
+.key-diff-background .animated-card-line,
+.key-diff-card-1 .animated-card-line,
+.key-diff-card-2 .animated-card-line,
+.key-diff-card-3 .animated-card-line {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Position lines for key-diff cards - Card 1 (top right) */
+.key-diff-card-1 .animated-card-line.line-1::before {
+  top: 28%;
+  bottom: auto;
+}
+
+.key-diff-card-1 .animated-card-line.line-2::before {
+  top: 56%;
+  bottom: auto;
+}
+
+.key-diff-card-1 .animated-card-line.line-3::before {
+  top: 70%;
+  bottom: auto;
+}
+
+.key-diff-card-1 .animated-card-line.line-1::after {
+  right: 28%;
+  left: auto;
+}
+
+.key-diff-card-1 .animated-card-line.line-2::after {
+  right: 56%;
+  left: auto;
+}
+
+.key-diff-card-1 .animated-card-line.line-3::after {
+  right: 84%;
+  left: auto;
+}
+
+/* Position lines for key-diff cards - Card 2 (top left AND top right) */
+.key-diff-card-2 .animated-card-line.line-1::before {
+  top: 28%;
+  bottom: auto;
+}
+
+.key-diff-card-2 .animated-card-line.line-2::before {
+  top: 56%;
+  bottom: auto;
+}
+
+.key-diff-card-2 .animated-card-line.line-3::before {
+  top: 70%;
+  bottom: auto;
+}
+
+.key-diff-card-2 .animated-card-line.line-1::after {
+  right: 28%;
+  left: auto;
+}
+
+.key-diff-card-2 .animated-card-line.line-2::after {
+  left: 28%;
+  right: auto;
+}
+
+.key-diff-card-2 .animated-card-line.line-3::after {
+  right: 56%;
+  left: auto;
+}
+
+/* Position lines for key-diff cards - Card 3 (top left) */
+.key-diff-card-3 .animated-card-line.line-1::before {
+  top: 28%;
+  bottom: auto;
+}
+
+.key-diff-card-3 .animated-card-line.line-2::before {
+  top: 56%;
+  bottom: auto;
+}
+
+.key-diff-card-3 .animated-card-line.line-3::before {
+  top: 70%;
+  bottom: auto;
+}
+
+.key-diff-card-3 .animated-card-line.line-1::after {
+  left: 28%;
+  right: auto;
+}
+
+.key-diff-card-3 .animated-card-line.line-2::after {
+  left: 56%;
+  right: auto;
+}
+
+.key-diff-card-3 .animated-card-line.line-3::after {
+  left: 84%;
+  right: auto;
+}
+
+
+.luminous-card .light-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  transform-style: preserve-3d;
+  perspective: 400px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.luminous-card .light-layer .slit {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 64%;
+  height: 1.2rem;
+  transform: rotateX(-76deg);
+  background: #121212;
+  box-shadow: 0 0 4px 0 rgba(255, 255, 255, 0);
+  transition: all 0.4s ease-in-out;
+}
+
+.luminous-card .light-layer .lumen {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  perspective: 400px;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.luminous-card .light-layer .lumen .min {
+  width: 70%;
+  height: 3rem;
+  background: linear-gradient(rgba(0, 119, 85, 0), rgba(0, 119, 85, 0.98));
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 2.5rem;
+  margin: auto;
+  transform: rotateX(-42deg);
+  opacity: 0.4;
+}
+
+.luminous-card .light-layer .lumen .mid {
+  width: 74%;
+  height: 13rem;
+  background: linear-gradient(rgba(0, 119, 85, 0), rgba(0, 119, 85, 0.98));
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 10em;
+  margin: auto;
+  transform: rotateX(-42deg);
+  filter: blur(1rem);
+  opacity: 0.8;
+  border-radius: 100% 100% 0 0;
+}
+
+.luminous-card .light-layer .lumen .hi {
+  width: 50%;
+  height: 13rem;
+  background: linear-gradient(rgba(0, 119, 85, 0), rgba(0, 119, 85, 0.98));
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 12em;
+  margin: auto;
+  transform: rotateX(22deg);
+  filter: blur(1rem);
+  opacity: 0.6;
+  border-radius: 100% 100% 0 0;
+}
+
+.luminous-card .light-layer .darken {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  perspective: 400px;
+  transition: opacity 0.4s ease-in-out;
+  opacity: 0.5;
+}
+
+.luminous-card .light-layer .darken > * {
+  transition: opacity 0.4s ease-in-out;
+}
+
+.luminous-card .light-layer .darken > * {
+  transition: opacity 0.4s ease-in-out;
+}
+
+.luminous-card .light-layer .darken .sl {
+  width: 64%;
+  height: 10rem;
+  background: linear-gradient(#000, rgba(0, 0, 0, 0));
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 9.6em;
+  bottom: 0;
+  margin: auto;
+  filter: blur(0.2rem);
+  opacity: 0.1;
+  border-radius: 0 0 100% 100%;
+  transform: rotateX(-22deg);
+}
+
+.luminous-card .light-layer .darken .ll {
+  width: 62%;
+  height: 10rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.67), rgba(0, 0, 0, 0));
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 11em;
+  bottom: 0;
+  margin: auto;
+  filter: blur(0.8rem);
+  opacity: 0.4;
+  border-radius: 0 0 100% 100%;
+  transform: rotateX(22deg);
+}
+
+.luminous-card .light-layer .darken .slt {
+  width: 0.5rem;
+  height: 4rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0));
+  position: absolute;
+  left: 0;
+  right: 11.5rem;
+  top: 3.9em;
+  bottom: 0;
+  margin: auto;
+  opacity: 0.6;
+  border-radius: 0 0 100% 100%;
+  transform: skewY(42deg);
+}
+
+.luminous-card .light-layer .darken .srt {
+  width: 0.5rem;
+  height: 4rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.33), rgba(0, 0, 0, 0));
+  position: absolute;
+  right: 0;
+  left: 11.5rem;
+  top: 3.9em;
+  bottom: 0;
+  margin: auto;
+  opacity: 0.6;
+  border-radius: 0 0 100% 100%;
+  transform: skewY(-42deg);
+}
+
+.luminous-card .content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.luminous-card .content h3 {
+  min-height: 5rem;
+  display: flex;
+  align-items: flex-start;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* KeyDifferentiators divider positioning */
+.key-diff-divider {
+  left: -2rem;
+}
+
+@media (min-width: 1024px) {
+  .key-diff-divider {
+    left: -3rem;
+  }
+}
+
+.luminous-card .content .bottom {
+  position: relative;
+  margin-top: auto;
+  min-height: 8rem;
+  display: flex;
+  align-items: flex-end;
+}
+
+.luminous-card .content .bottom h3 {
+  margin: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+.luminous-card .content .bottom p {
+  margin: 0;
+}
+
+/* KeyDifferentiators section animated boxes background */
+.key-diff-section-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.key-diff-section-background {
+  -webkit-mask-image: radial-gradient(circle at 60% 5%, black 0%, black 20%, transparent 70%);
+  mask-image: radial-gradient(circle at 60% 5%, black 0%, black 20%, transparent 70%);
+}
+
+.key-diff-section-tiles {
+  opacity: 0.08;
+  transition: opacity 0.3s;
+}
+
+.key-diff-section-background .animated-card-tile {
+  opacity: 0.15;
+  transition: opacity 0.2s;
+  background-color: rgba(0, 119, 85, 0.2);
+}
+
+.key-diff-section-background .animated-card-line {
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-color: rgba(0, 119, 85, 0.5);
+}
+
+.key-diff-section-background .animated-card-shine {
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.4s;
+}
+
+.key-diff-section-background .animated-card-shine::before {
+  content: '';
+  position: absolute;
+  top: 5%;
+  right: 0;
+  left: auto;
+  width: 200px;
+  background: radial-gradient(circle, rgba(0, 119, 85, 0.4) 0%, rgba(0, 119, 85, 0.2) 30%, transparent 70%);
+  height: 200px;
+  filter: blur(35px);
+}
+
+.key-diff-section-bg:hover .key-diff-section-tiles {
+  opacity: 0.7;
+  transition-delay: 0.2s;
+}
+
+.key-diff-section-bg:hover .key-diff-section-background .animated-card-shine {
+  opacity: 1;
+  transition-duration: 0.5s;
+  transition-delay: 0s;
+}
+
+.key-diff-section-bg:hover .key-diff-section-background .animated-card-tile {
+  animation-name: tile;
+  opacity: 0.4;
+}
+
+.key-diff-section-bg:hover .key-diff-section-background .animated-card-line {
+  opacity: 1;
+  border-color: rgba(0, 119, 85, 0.7);
+}
+
+.key-diff-section-bg:hover .key-diff-section-background .animated-card-line::before,
+.key-diff-section-bg:hover .key-diff-section-background .animated-card-line::after {
+  opacity: 1;
+}
+
+/* Position tiles for key-diff section - top right - tighter grid */
+.key-diff-section-background .animated-card-tile.tile-1 {
+  top: 0;
+  bottom: auto;
+  right: 0;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background .animated-card-tile.tile-2 {
+  top: 0;
+  bottom: auto;
+  right: 20%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background .animated-card-tile.tile-3 {
+  top: 0;
+  bottom: auto;
+  right: 40%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background .animated-card-tile.tile-4 {
+  top: 0;
+  bottom: auto;
+  right: 60%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background .animated-card-tile.tile-5 {
+  top: 0;
+  bottom: auto;
+  right: 80%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background .animated-card-tile.tile-6 {
+  top: 20%;
+  bottom: auto;
+  right: 0;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background .animated-card-tile.tile-7 {
+  top: 20%;
+  bottom: auto;
+  right: 20%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background .animated-card-tile.tile-8 {
+  top: 20%;
+  bottom: auto;
+  right: 40%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background .animated-card-tile.tile-9 {
+  top: 20%;
+  bottom: auto;
+  right: 60%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background .animated-card-tile.tile-10 {
+  top: 20%;
+  bottom: auto;
+  right: 80%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+/* Position lines for key-diff section - adjusted for tighter grid */
+.key-diff-section-background .animated-card-line.line-1::before {
+  top: 20%;
+  bottom: auto;
+}
+
+.key-diff-section-background .animated-card-line.line-2::before {
+  top: 40%;
+  bottom: auto;
+}
+
+.key-diff-section-background .animated-card-line.line-3::before {
+  top: 60%;
+  bottom: auto;
+}
+
+.key-diff-section-background .animated-card-line.line-1::after {
+  right: 20%;
+  left: auto;
+}
+
+.key-diff-section-background .animated-card-line.line-2::after {
+  right: 40%;
+  left: auto;
+}
+
+.key-diff-section-background .animated-card-line.line-3::after {
+  right: 60%;
+  left: auto;
+}
+
+/* KeyDifferentiators bottom-right animation */
+.key-diff-section-background-bottom {
+  -webkit-mask-image: radial-gradient(circle at 60% 95%, black 0%, black 20%, transparent 70%);
+  mask-image: radial-gradient(circle at 60% 95%, black 0%, black 20%, transparent 70%);
+}
+
+.key-diff-section-background-bottom .animated-card-shine {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.key-diff-section-tiles-bottom {
+  opacity: 0.08;
+  transition: opacity 0.3s;
+}
+
+.key-diff-section-background-bottom .animated-card-tile {
+  opacity: 0.15;
+  transition: opacity 0.2s;
+  background-color: rgba(0, 119, 85, 0.2);
+}
+
+.key-diff-section-background-bottom .animated-card-line {
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-color: rgba(0, 119, 85, 0.5);
+}
+
+.key-diff-section-background-bottom .animated-card-shine {
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.4s;
+}
+
+.key-diff-section-background-bottom .animated-card-shine::before {
+  content: '';
+  position: absolute;
+  bottom: 55%;
+  top: auto;
+  right: 0;
+  left: auto;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(0, 119, 85, 0.4) 0%, rgba(0, 119, 85, 0.2) 30%, transparent 70%);
+  filter: blur(35px);
+}
+
+.key-diff-section-bg:hover .key-diff-section-tiles-bottom {
+  opacity: 0.7;
+  transition-delay: 0.2s;
+}
+
+.key-diff-section-bg:hover .key-diff-section-background-bottom .animated-card-shine {
+  opacity: 1;
+  transition-duration: 0.5s;
+  transition-delay: 0s;
+}
+
+.key-diff-section-bg:hover .key-diff-section-background-bottom .animated-card-tile {
+  animation-name: tile;
+  opacity: 0.4;
+}
+
+.key-diff-section-bg:hover .key-diff-section-background-bottom .animated-card-line {
+  opacity: 1;
+  border-color: rgba(0, 119, 85, 0.7);
+}
+
+.key-diff-section-bg:hover .key-diff-section-background-bottom .animated-card-line::before,
+.key-diff-section-bg:hover .key-diff-section-background-bottom .animated-card-line::after {
+  opacity: 1;
+}
+
+/* Position tiles for key-diff section bottom-right */
+.key-diff-section-background-bottom .animated-card-tile.tile-1 {
+  top: auto;
+  bottom: 0;
+  right: 0;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background-bottom .animated-card-tile.tile-2 {
+  top: auto;
+  bottom: 0;
+  right: 20%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background-bottom .animated-card-tile.tile-3 {
+  top: auto;
+  bottom: 0;
+  right: 40%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background-bottom .animated-card-tile.tile-4 {
+  top: auto;
+  bottom: 0;
+  right: 60%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background-bottom .animated-card-tile.tile-5 {
+  top: auto;
+  bottom: 0;
+  right: 80%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background-bottom .animated-card-tile.tile-6 {
+  top: auto;
+  bottom: 20%;
+  right: 0;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background-bottom .animated-card-tile.tile-7 {
+  top: auto;
+  bottom: 20%;
+  right: 20%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background-bottom .animated-card-tile.tile-8 {
+  top: auto;
+  bottom: 20%;
+  right: 40%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background-bottom .animated-card-tile.tile-9 {
+  top: auto;
+  bottom: 20%;
+  right: 60%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+.key-diff-section-background-bottom .animated-card-tile.tile-10 {
+  top: auto;
+  bottom: 20%;
+  right: 80%;
+  left: auto;
+  height: 20%;
+  width: 20%;
+}
+
+/* Position lines for key-diff section bottom-right */
+.key-diff-section-background-bottom .animated-card-line.line-1::before {
+  top: auto;
+  bottom: 20%;
+}
+
+.key-diff-section-background-bottom .animated-card-line.line-2::before {
+  top: auto;
+  bottom: 40%;
+}
+
+.key-diff-section-background-bottom .animated-card-line.line-3::before {
+  top: auto;
+  bottom: 60%;
+}
+
+.key-diff-section-background-bottom .animated-card-line.line-1::after {
+  right: 20%;
+  left: auto;
+}
+
+.key-diff-section-background-bottom .animated-card-line.line-2::after {
+  right: 40%;
+  left: auto;
+}
+
+.key-diff-section-background-bottom .animated-card-line.line-3::after {
+  right: 60%;
+  left: auto;
+}
+
+/* BuildWithZisk bottom-right animation */
+.build-with-zisk-background {
+  -webkit-mask-image: radial-gradient(circle at 60% 95%, black 0%, black 20%, transparent 70%);
+  mask-image: radial-gradient(circle at 60% 95%, black 0%, black 20%, transparent 70%);
+}
+
+.build-with-zisk-background .animated-card-shine {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.build-with-zisk-tiles {
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.build-with-zisk-background .animated-card-tile {
+  opacity: 0;
+  background-color: rgba(0, 255, 124, 0.12);
+}
+
+.build-with-zisk-background .animated-card-line {
+  opacity: 0;
+  border-color: rgba(0, 255, 124, 0.3);
+}
+
+.build-with-zisk-background .animated-card-shine {
+  opacity: 0;
+  z-index: 1;
+}
+
+.build-with-zisk-background .animated-card-shine::before {
+  left: 50%;
+  top: 55%;
+  bottom: auto;
+  opacity: 0.1;
+  background: radial-gradient(circle, rgba(0, 255, 124, 0.4) 0%, rgba(0, 255, 124, 0.2) 30%, transparent 70%);
+  filter: blur(35px);
+}
+
+.group:hover .build-with-zisk-tiles {
+  opacity: 0.6;
+  transition-delay: 0.25s;
+}
+
+.group:hover .build-with-zisk-background .animated-card-shine {
+  opacity: 1;
+  transition-duration: 0.5s;
+  transition-delay: 0s;
+}
+
+.group:hover .build-with-zisk-background .animated-card-tile {
+  animation-name: tile;
+}
+
+.group:hover .build-with-zisk-background .animated-card-line {
+  opacity: 0.2;
+  transition-duration: 0.15s;
+}
+
+.group:hover .build-with-zisk-background .animated-card-line::before {
+  transform: scaleX(1);
+}
+
+.group:hover .build-with-zisk-background .animated-card-line::after {
+  transform: scaleY(1);
+}
+
+/* Position tiles for build-with-zisk section - bottom right */
+.build-with-zisk-background .animated-card-tile.tile-1 {
+  top: auto;
+  bottom: 0;
+  right: 0;
+  left: auto;
+  height: 10%;
+  width: 10%;
+}
+
+.build-with-zisk-background .animated-card-tile.tile-2 {
+  top: auto;
+  bottom: 0;
+  right: 10%;
+  left: auto;
+  height: 10%;
+  width: 10%;
+}
+
+.build-with-zisk-background .animated-card-tile.tile-3 {
+  top: auto;
+  bottom: 0;
+  right: 20%;
+  left: auto;
+  height: 10%;
+  width: 10%;
+}
+
+.build-with-zisk-background .animated-card-tile.tile-4 {
+  top: auto;
+  bottom: 0;
+  right: 30%;
+  left: auto;
+  height: 10%;
+  width: 10%;
+}
+
+.build-with-zisk-background .animated-card-tile.tile-5 {
+  top: auto;
+  bottom: 10%;
+  right: 0;
+  left: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.build-with-zisk-background .animated-card-tile.tile-6 {
+  top: auto;
+  bottom: 10%;
+  right: 22.5%;
+  left: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.build-with-zisk-background .animated-card-tile.tile-7 {
+  top: auto;
+  bottom: 10%;
+  right: 45%;
+  left: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.build-with-zisk-background .animated-card-tile.tile-8 {
+  top: auto;
+  bottom: 10%;
+  right: 67.5%;
+  left: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.build-with-zisk-background .animated-card-tile.tile-9 {
+  top: auto;
+  bottom: 32.5%;
+  right: 45%;
+  left: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.build-with-zisk-background .animated-card-tile.tile-10 {
+  top: auto;
+  bottom: 32.5%;
+  right: 67.5%;
+  left: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+/* Position lines for build-with-zisk section - bottom right */
+.build-with-zisk-background .animated-card-line.line-1::before {
+  top: auto;
+  bottom: 10%;
+}
+
+.build-with-zisk-background .animated-card-line.line-2::before {
+  top: auto;
+  bottom: 32.5%;
+}
+
+.build-with-zisk-background .animated-card-line.line-3::before {
+  top: auto;
+  bottom: 45%;
+}
+
+.build-with-zisk-background .animated-card-line.line-1::after {
+  left: 22.5%;
+  right: auto;
+}
+
+.build-with-zisk-background .animated-card-line.line-2::after {
+  left: 45%;
+  right: auto;
+}
+
+.build-with-zisk-background .animated-card-line.line-3::after {
+  left: 67.5%;
+  right: auto;
+}
+
+/* BuildWithZisk top-right animation */
+.build-with-zisk-background-top {
+  -webkit-mask-image: radial-gradient(circle at 60% 5%, black 0%, black 20%, transparent 70%);
+  mask-image: radial-gradient(circle at 60% 5%, black 0%, black 20%, transparent 70%);
+}
+
+.build-with-zisk-background-top .animated-card-shine {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.build-with-zisk-tiles-top {
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.build-with-zisk-background-top .animated-card-tile {
+  opacity: 0;
+  background-color: rgba(0, 255, 124, 0.12);
+}
+
+.build-with-zisk-background-top .animated-card-line {
+  opacity: 0;
+  border-color: rgba(0, 255, 124, 0.3);
+}
+
+.build-with-zisk-background-top .animated-card-shine {
+  opacity: 0;
+  z-index: 1;
+}
+
+.build-with-zisk-background-top .animated-card-shine::before {
+  left: 50%;
+  top: 5%;
+  bottom: auto;
+  opacity: 0.1;
+  background: radial-gradient(circle, rgba(0, 255, 124, 0.4) 0%, rgba(0, 255, 124, 0.2) 30%, transparent 70%);
+  filter: blur(35px);
+  width: 200px;
+  height: 200px;
+}
+
+.group:hover .build-with-zisk-tiles-top {
+  opacity: 0.6;
+  transition-delay: 0.25s;
+}
+
+.group:hover .build-with-zisk-background-top .animated-card-shine {
+  opacity: 1;
+  transition-duration: 0.5s;
+  transition-delay: 0s;
+}
+
+.group:hover .build-with-zisk-background-top .animated-card-tile {
+  animation-name: tile;
+}
+
+.group:hover .build-with-zisk-background-top .animated-card-line {
+  opacity: 0.2;
+  transition-duration: 0.15s;
+}
+
+.group:hover .build-with-zisk-background-top .animated-card-line::before {
+  transform: scaleX(1);
+}
+
+.group:hover .build-with-zisk-background-top .animated-card-line::after {
+  transform: scaleY(1);
+}
+
+/* Position tiles for build-with-zisk section - top right */
+.build-with-zisk-background-top .animated-card-tile.tile-1 {
+  top: 0;
+  bottom: auto;
+  right: 0;
+  left: auto;
+  height: 10%;
+  width: 10%;
+}
+
+.build-with-zisk-background-top .animated-card-tile.tile-2 {
+  top: 0;
+  bottom: auto;
+  right: 10%;
+  left: auto;
+  height: 10%;
+  width: 10%;
+}
+
+.build-with-zisk-background-top .animated-card-tile.tile-3 {
+  top: 0;
+  bottom: auto;
+  right: 20%;
+  left: auto;
+  height: 10%;
+  width: 10%;
+}
+
+.build-with-zisk-background-top .animated-card-tile.tile-4 {
+  top: 0;
+  bottom: auto;
+  right: 30%;
+  left: auto;
+  height: 10%;
+  width: 10%;
+}
+
+.build-with-zisk-background-top .animated-card-tile.tile-5 {
+  top: 10%;
+  bottom: auto;
+  right: 0;
+  left: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.build-with-zisk-background-top .animated-card-tile.tile-6 {
+  top: 10%;
+  bottom: auto;
+  right: 22.5%;
+  left: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.build-with-zisk-background-top .animated-card-tile.tile-7 {
+  top: 10%;
+  bottom: auto;
+  right: 45%;
+  left: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.build-with-zisk-background-top .animated-card-tile.tile-8 {
+  top: 10%;
+  bottom: auto;
+  right: 67.5%;
+  left: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.build-with-zisk-background-top .animated-card-tile.tile-9 {
+  top: 32.5%;
+  bottom: auto;
+  right: 45%;
+  left: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.build-with-zisk-background-top .animated-card-tile.tile-10 {
+  top: 32.5%;
+  bottom: auto;
+  right: 67.5%;
+  left: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+/* Position lines for build-with-zisk section - top right */
+.build-with-zisk-background-top .animated-card-line.line-1::before {
+  top: 10%;
+  bottom: auto;
+}
+
+.build-with-zisk-background-top .animated-card-line.line-2::before {
+  top: 32.5%;
+  bottom: auto;
+}
+
+.build-with-zisk-background-top .animated-card-line.line-3::before {
+  top: 45%;
+  bottom: auto;
+}
+
+.build-with-zisk-background-top .animated-card-line.line-1::after {
+  right: 22.5%;
+  left: auto;
+}
+
+.build-with-zisk-background-top .animated-card-line.line-2::after {
+  right: 45%;
+  left: auto;
+}
+
+.build-with-zisk-background-top .animated-card-line.line-3::after {
+  right: 67.5%;
+  left: auto;
+}
+
+/* Features-specific: bottom-left positioning */
+.features-background {
+  -webkit-mask-image: radial-gradient(circle at 40% 95%, black 0%, black 20%, transparent 70%);
+  mask-image: radial-gradient(circle at 40% 95%, black 0%, black 20%, transparent 70%);
+}
+
+.features-background .animated-card-shine {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.features-background .features-tiles {
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.features-background .animated-card-tile {
+  opacity: 0;
+}
+
+.features-background .animated-card-line {
+  opacity: 0;
+}
+
+.features-background .animated-card-shine {
+  opacity: 0;
+  z-index: 1;
+}
+
+.features-background .animated-card-shine::before {
+  left: 50%;
+  top: 55%;
+  bottom: auto;
+  opacity: 0.1;
+}
+
+.group:hover .features-background .features-tiles {
+  opacity: 0.6;
+  transition-delay: 0.25s;
+}
+
+.group:hover .features-background .animated-card-shine {
+  opacity: 1;
+  transition-duration: 0.5s;
+  transition-delay: 0s;
+}
+
+.group:hover .features-background .animated-card-tile {
+  animation-name: tile;
+}
+
+.group:hover .features-background .animated-card-line {
+  opacity: 0.2;
+  transition-duration: 0.15s;
+}
+
+.group:hover .features-background .animated-card-line::before {
+  transform: scaleX(1);
+}
+
+.group:hover .features-background .animated-card-line::after {
+  transform: scaleY(1);
+}
+
+/* Position tiles for features section - bottom-left */
+.features-background .animated-card-tile.tile-1 {
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: auto;
+  height: 10%;
+  width: 10%;
+}
+
+.features-background .animated-card-tile.tile-2 {
+  top: auto;
+  bottom: 0;
+  left: 10%;
+  right: auto;
+  height: 10%;
+  width: 10%;
+}
+
+.features-background .animated-card-tile.tile-3 {
+  top: auto;
+  bottom: 0;
+  left: 20%;
+  right: auto;
+  height: 10%;
+  width: 10%;
+}
+
+.features-background .animated-card-tile.tile-4 {
+  top: auto;
+  bottom: 0;
+  left: 30%;
+  right: auto;
+  height: 10%;
+  width: 10%;
+}
+
+.features-background .animated-card-tile.tile-5 {
+  top: auto;
+  bottom: 10%;
+  left: 0;
+  right: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.features-background .animated-card-tile.tile-6 {
+  top: auto;
+  bottom: 10%;
+  left: 22.5%;
+  right: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.features-background .animated-card-tile.tile-7 {
+  top: auto;
+  bottom: 10%;
+  left: 45%;
+  right: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.features-background .animated-card-tile.tile-8 {
+  top: auto;
+  bottom: 10%;
+  left: 67.5%;
+  right: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.features-background .animated-card-tile.tile-9 {
+  top: auto;
+  bottom: 32.5%;
+  left: 0;
+  right: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.features-background .animated-card-tile.tile-10 {
+  top: auto;
+  bottom: 32.5%;
+  left: 22.5%;
+  right: auto;
+  height: 22.5%;
+  width: 22.5%;
+}
+
+.features-background .animated-card-line.line-1::before {
+  top: auto;
+  bottom: 10%;
+}
+
+.features-background .animated-card-line.line-2::before {
+  top: auto;
+  bottom: 32.5%;
+}
+
+.features-background .animated-card-line.line-3::before {
+  top: auto;
+  bottom: 45%;
+}
+
+.features-background .animated-card-line.line-1::after {
+  left: 22.5%;
+  right: auto;
+}
+
+.features-background .animated-card-line.line-2::after {
+  left: 45%;
+  right: auto;
+}
+
+.features-background .animated-card-line.line-3::after {
+  left: 67.5%;
+  right: auto;
+}
+
+
+/* Scroll snap for KeyDifferentiators cards */
+.key-diff-section {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 2rem;
+}
+
+.key-diff-card-snap {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .key-diff-cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .key-diff-card-snap {
+    min-height: auto;
+  }
+}
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Circular Animation for KeyDifferentiators */
+.circle-animation {
+  width: 50vmin;
+  height: 50vmin;
+  border-radius: 50%;
+  position: relative;
+}
+
+/* Smaller circular animation for individual cards */
+.circle-animation-small {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.small-circle {
+  color: transparent;
+  border: 1px solid currentColor;
+  width: 18vmin;
+  height: 18vmin;
+  border-radius: 50%;
+  position: absolute;
+  top: calc(50vmin / 2 - 18vmin / 2);
+  left: calc(50vmin / 2 - 18vmin / 2);
+  transform-origin: center;
+  transform: rotate(0deg) translateX(calc(50vmin / 2));
+  animation: fade 4s infinite;
+}
+
+.small-circle-small {
+  color: transparent;
+  border: 1px solid currentColor;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  top: calc(120px / 2 - 40px / 2);
+  left: calc(120px / 2 - 40px / 2);
+  transform-origin: center;
+  transform: rotate(0deg) translateX(calc(120px / 2));
+  animation: fade 4s infinite;
+}
+
+.small-circle::before,
+.small-circle::after {
+  content: "";
+  display: block;
+  position: absolute;
+}
+
+.small-circle::before {
+  background: #aaa;
+  width: 1vmin;
+  height: 1vmin;
+  border-radius: 50%;
+  top: calc(-1 * 1vmin / 2);
+  left: calc(18vmin / 2 - 1vmin / 2);
+  box-shadow: 0vmin 18vmin #aaa;
+  transform-origin: calc(1vmin / 2) calc(18vmin / 2 + 1vmin / 2);
+  animation: half-rotation 4s infinite;
+}
+
+.small-circle::after {
+  border-left: 1px solid currentColor;
+  height: 100%;
+  left: calc(18vmin / 2);
+  animation: half-rotation 4s infinite;
+}
+
+.small-circle-small::before {
+  background: #aaa;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  top: calc(-1 * 2px / 2);
+  left: calc(40px / 2 - 2px / 2);
+  box-shadow: 0px 40px #aaa;
+  transform-origin: calc(2px / 2) calc(40px / 2 + 2px / 2);
+  animation: half-rotation 4s infinite;
+}
+
+.small-circle-small::after {
+  border-left: 1px solid currentColor;
+  height: 100%;
+  left: calc(40px / 2);
+  animation: half-rotation 4s infinite;
+}
+
+@keyframes half-rotation {
+  50% {
+    transform: rotate(0.5turn);
+  }
+  100% {
+    transform: rotate(0.5turn);
+  }
+}
+
+@keyframes fade {
+  0% {
+    color: transparent;
+  }
+  15% {
+    color: #aaa;
+  }
+  30% {
+    color: transparent;
+  }
+}
+
+/* Position each small circle around the main circle */
+.small-circle:nth-child(1) {
+  transform: rotate(0deg) translateX(calc(50vmin / 2));
+}
+
+.small-circle:nth-child(2) {
+  transform: rotate(25.714deg) translateX(calc(50vmin / 2));
+  animation-delay: 0.1s;
+}
+
+.small-circle:nth-child(2)::before,
+.small-circle:nth-child(2)::after {
+  animation-delay: 0.1s;
+}
+
+.small-circle:nth-child(3) {
+  transform: rotate(51.429deg) translateX(calc(50vmin / 2));
+  animation-delay: 0.2s;
+}
+
+.small-circle:nth-child(3)::before,
+.small-circle:nth-child(3)::after {
+  animation-delay: 0.2s;
+}
+
+.small-circle:nth-child(4) {
+  transform: rotate(77.143deg) translateX(calc(50vmin / 2));
+  animation-delay: 0.3s;
+}
+
+.small-circle:nth-child(4)::before,
+.small-circle:nth-child(4)::after {
+  animation-delay: 0.3s;
+}
+
+.small-circle:nth-child(5) {
+  transform: rotate(102.857deg) translateX(calc(50vmin / 2));
+  animation-delay: 0.4s;
+}
+
+.small-circle:nth-child(5)::before,
+.small-circle:nth-child(5)::after {
+  animation-delay: 0.4s;
+}
+
+.small-circle:nth-child(6) {
+  transform: rotate(128.571deg) translateX(calc(50vmin / 2));
+  animation-delay: 0.5s;
+}
+
+.small-circle:nth-child(6)::before,
+.small-circle:nth-child(6)::after {
+  animation-delay: 0.5s;
+}
+
+.small-circle:nth-child(7) {
+  transform: rotate(154.286deg) translateX(calc(50vmin / 2));
+  animation-delay: 0.6s;
+}
+
+.small-circle:nth-child(7)::before,
+.small-circle:nth-child(7)::after {
+  animation-delay: 0.6s;
+}
+
+.small-circle:nth-child(8) {
+  transform: rotate(180deg) translateX(calc(50vmin / 2));
+  animation-delay: 0.7s;
+}
+
+.small-circle:nth-child(8)::before,
+.small-circle:nth-child(8)::after {
+  animation-delay: 0.7s;
+}
+
+.small-circle:nth-child(9) {
+  transform: rotate(205.714deg) translateX(calc(50vmin / 2));
+  animation-delay: 0.8s;
+}
+
+.small-circle:nth-child(9)::before,
+.small-circle:nth-child(9)::after {
+  animation-delay: 0.8s;
+}
+
+.small-circle:nth-child(10) {
+  transform: rotate(231.429deg) translateX(calc(50vmin / 2));
+  animation-delay: 0.9s;
+}
+
+.small-circle:nth-child(10)::before,
+.small-circle:nth-child(10)::after {
+  animation-delay: 0.9s;
+}
+
+.small-circle:nth-child(11) {
+  transform: rotate(257.143deg) translateX(calc(50vmin / 2));
+  animation-delay: 1s;
+}
+
+.small-circle:nth-child(11)::before,
+.small-circle:nth-child(11)::after {
+  animation-delay: 1s;
+}
+
+.small-circle:nth-child(12) {
+  transform: rotate(282.857deg) translateX(calc(50vmin / 2));
+  animation-delay: 1.1s;
+}
+
+.small-circle:nth-child(12)::before,
+.small-circle:nth-child(12)::after {
+  animation-delay: 1.1s;
+}
+
+.small-circle:nth-child(13) {
+  transform: rotate(308.571deg) translateX(calc(50vmin / 2));
+  animation-delay: 1.2s;
+}
+
+.small-circle:nth-child(13)::before,
+.small-circle:nth-child(13)::after {
+  animation-delay: 1.2s;
+}
+
+.small-circle:nth-child(14) {
+  transform: rotate(334.286deg) translateX(calc(50vmin / 2));
+  animation-delay: 1.3s;
+}
+
+.small-circle:nth-child(14)::before,
+.small-circle:nth-child(14)::after {
+  animation-delay: 1.3s;
+}
+
+/* Position each small circle for small animation */
+.circle-animation-small .small-circle-small:nth-child(1) {
+  transform: rotate(0deg) translateX(calc(120px / 2));
+}
+
+.circle-animation-small .small-circle-small:nth-child(2) {
+  transform: rotate(25.714deg) translateX(calc(120px / 2));
+  animation-delay: 0.1s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(2)::before,
+.circle-animation-small .small-circle-small:nth-child(2)::after {
+  animation-delay: 0.1s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(3) {
+  transform: rotate(51.429deg) translateX(calc(120px / 2));
+  animation-delay: 0.2s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(3)::before,
+.circle-animation-small .small-circle-small:nth-child(3)::after {
+  animation-delay: 0.2s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(4) {
+  transform: rotate(77.143deg) translateX(calc(120px / 2));
+  animation-delay: 0.3s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(4)::before,
+.circle-animation-small .small-circle-small:nth-child(4)::after {
+  animation-delay: 0.3s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(5) {
+  transform: rotate(102.857deg) translateX(calc(120px / 2));
+  animation-delay: 0.4s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(5)::before,
+.circle-animation-small .small-circle-small:nth-child(5)::after {
+  animation-delay: 0.4s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(6) {
+  transform: rotate(128.571deg) translateX(calc(120px / 2));
+  animation-delay: 0.5s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(6)::before,
+.circle-animation-small .small-circle-small:nth-child(6)::after {
+  animation-delay: 0.5s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(7) {
+  transform: rotate(154.286deg) translateX(calc(120px / 2));
+  animation-delay: 0.6s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(7)::before,
+.circle-animation-small .small-circle-small:nth-child(7)::after {
+  animation-delay: 0.6s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(8) {
+  transform: rotate(180deg) translateX(calc(120px / 2));
+  animation-delay: 0.7s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(8)::before,
+.circle-animation-small .small-circle-small:nth-child(8)::after {
+  animation-delay: 0.7s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(9) {
+  transform: rotate(205.714deg) translateX(calc(120px / 2));
+  animation-delay: 0.8s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(9)::before,
+.circle-animation-small .small-circle-small:nth-child(9)::after {
+  animation-delay: 0.8s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(10) {
+  transform: rotate(231.429deg) translateX(calc(120px / 2));
+  animation-delay: 0.9s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(10)::before,
+.circle-animation-small .small-circle-small:nth-child(10)::after {
+  animation-delay: 0.9s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(11) {
+  transform: rotate(257.143deg) translateX(calc(120px / 2));
+  animation-delay: 1s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(11)::before,
+.circle-animation-small .small-circle-small:nth-child(11)::after {
+  animation-delay: 1s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(12) {
+  transform: rotate(282.857deg) translateX(calc(120px / 2));
+  animation-delay: 1.1s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(12)::before,
+.circle-animation-small .small-circle-small:nth-child(12)::after {
+  animation-delay: 1.1s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(13) {
+  transform: rotate(308.571deg) translateX(calc(120px / 2));
+  animation-delay: 1.2s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(13)::before,
+.circle-animation-small .small-circle-small:nth-child(13)::after {
+  animation-delay: 1.2s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(14) {
+  transform: rotate(334.286deg) translateX(calc(120px / 2));
+  animation-delay: 1.3s;
+}
+
+.circle-animation-small .small-circle-small:nth-child(14)::before,
+.circle-animation-small .small-circle-small:nth-child(14)::after {
+  animation-delay: 1.3s;
+}
